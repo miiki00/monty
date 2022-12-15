@@ -25,7 +25,7 @@ int exact_match(char *a, char *b)
  * handle_line - extracts the neccessary information from a line of
  * montybyte code.
  * @line: the line to analayz.
- * @line_number: for error message in case of failure.
+ * @line_num: for error message in case of failure.
  * @stack: for memory managment in case of failuer.
  * @f: for memory managment in case of failure.
  * Return: opcode if the line contains a valid opcode.
