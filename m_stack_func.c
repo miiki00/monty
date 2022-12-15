@@ -59,3 +59,26 @@ stack_t pint(stack_t **stack, unsigned int line_number)
 	}
 	printf("%d\n", (*stack)->n);
 }
+stack_t swap(stack_t **stack, unsigned int line_number)
+{
+	stack_t *h;
+	int length = 0, temp;
+
+	h = *stack;
+	while (h)
+	{
+		h = h->next;
+		length++;
+	}
+	if (length < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		fclose(opcode_i.file);
+		free(opcode_i.line);
+		exit(EXIT_FAILURE);
+	}
+	h = *stack;
+	temp = h->n;
+	h->n = h->next->n;
+	h->next->n = temp;
+}
