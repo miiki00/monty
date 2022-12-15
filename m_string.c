@@ -25,14 +25,12 @@ int exact_match(char *a, char *b)
  * handle_line - extracts the neccessary information from a line of
  * montybyte code.
  * @line: the line to analayz.
- * @line_num: for error message in case of failure.
- * @stack: for memory managment in case of failuer.
- * @f: for memory managment in case of failure.
+ *
  * Return: opcode if the line contains a valid opcode.
  * else if blank line NULL.
  * else prints the right error message and exit.
  */
-char *handle_line(char *line, unsigned int line_num, stack_t *stack, FILE *f)
+char *handle_line(char *line)
 {
 	char *token = NULL, *opcode = NULL, *tmp = NULL;
 	char *delimeters = " \t\n";
@@ -49,19 +47,20 @@ char *handle_line(char *line, unsigned int line_num, stack_t *stack, FILE *f)
 	ret = check_opcode(token);
 	if (ret == -1)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_num, token);
+		fprintf(stderr,	"L%d: unknown instruction %s\n",
+			opcode_info.line_number, token);
 		free(line); /* needs fixing */
-		free_stack_t(stack); /* needs fixing */
-		fclose(f); /* needs fixing */
+		free_stack_t(*(opcode_info.stack)); /* needs fixing */
+		fclose(opcode_info.file); /* needs fixing */
 		exit(EXIT_FAILURE);
 	}
 	if (ret == 1)
 	{
 		tmp = strtok(NULL, delimeters);
 		if (tmp != NULL)
-			G_arg = _strdup(tmp);
+			opcode_info.arg = _strdup(tmp);
 		else
-			G_arg = NULL;
+			opcode_info.arg = NULL;
 	}
 	opcode = _strdup(token);
 	free(line);

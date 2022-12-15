@@ -1,7 +1,7 @@
 #include "monty.h"
 
-/* global variable argument fron montybyte code */
-char *G_arg;
+/* contains information about the current opcode being executed. */
+opcode_i opcode_info;
 
 /**
  * main - entry of the monty interpreter 0.98.
@@ -19,16 +19,18 @@ int main(int ac, char **av)
 	stack_t *stack = NULL;
 
 	check_main_args(ac, av);
-	_file = open_file(av[1], "r");
+	opcode_info.file = _file = open_file(av[1], "r");
+	opcode_info.stack = &stack;
 	for (line_number = 1; ; line_number++)
 	{
+		opcode_info.line_number = line_number;
 		if ((getline(&line, &len, _file)) == -1)
 		{
 			if (line != NULL)
 				free(line);
 			break;
 		}
-		opcode = handle_line(line, line_number, stack, _file);
+		opcode_info.opcode = opcode = handle_line(line);
 		if (opcode == NULL)
 		{
 			line = NULL;

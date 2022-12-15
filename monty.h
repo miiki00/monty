@@ -37,6 +37,23 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct opcode_info - contains information about an opcode.
+ * @file: FILE * of the file from which opcode is being readed from.
+ * @opcode: the opcode which this information is about.
+ * @arg: if there is argument to the opcode this is where it gets stored.
+ * @line_number: the current line of the opcode in the file.
+ * @stack: the head of the stack which the opcode is operates on.
+ */
+typedef struct opcode_info
+{
+	FILE *file;
+	char *opcode;
+	char *arg;
+	unsigned int line_number;
+	stack_t **stack;
+} opcode_i;
+
 /* local library headers */
 #include "m_opcode.h"
 #include "m_error.h"
@@ -50,6 +67,6 @@ void check_main_args(int ac, char **av);
 FILE *open_file(char *path, char *flags);
 
 /* global variables */
-extern char *G_arg;
+extern opcode_i opcode_info;
 
 #endif
