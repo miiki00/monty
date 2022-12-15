@@ -1,7 +1,11 @@
 #ifndef M_OPCODE_H
 #define M_OPCODE_H
+/* operations code declaration and definations related to monty 0.98 */
 
-/* opcodes functions */
+/* operations code related macro definations */
+#define OPCODES_N 2 /* number of currently active opcode functions */
+
+/* function declarations */
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);

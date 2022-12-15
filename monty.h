@@ -1,8 +1,8 @@
 #ifndef MONTY_H
 #define MONTY_H
+/* main header collection of monty 0.98 */
 
 /* standard library headers */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,18 +38,16 @@ typedef struct instruction_s
 } instruction_t;
 
 /* local library headers */
-
 #include "m_opcode.h"
 #include "m_error.h"
 #include "m_memory.h"
 #include "m_string.h"
 #include "m_exec_opcode.h"
+#include "m_stack_func.h"
 
-/* local functions */
-
+/* function declarations */
 void check_main_args(int ac, char **av);
 FILE *open_file(char *path, char *flags);
-char *handle_line(char *line);
 
 /* global variables */
 extern char *G_arg;

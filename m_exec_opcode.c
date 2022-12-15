@@ -21,45 +21,12 @@ int check_opcode(char *opcode)
 	if (opcode == NULL)
 		return (0);
 	for (i = 0; arg_opcodes[i] != NULL; i++)
-	{
 		if (exact_match(opcode, arg_opcodes[i]))
 			return (1);
-	}
 	for (i = 0; nonarg_opcodes[i] != NULL; i++)
-	{
 		if (exact_match(opcode, nonarg_opcodes[i]))
 			return (0);
-	}
 	return (-1);
-}
-
-/**
- * build_instructions - builds array of instraction_t type
- * with intialized values.
- *
- * Return: array of instruction_t type (success), else exit.
- */
-instruction_t **build_instructions(void)
-{
-	int i;
-
-	void (*f[])(stack_t **, unsigned int) = {
-		&push, &pall, NULL
-	};
-	char *opcodes[] = {
-		"push", "pall", NULL
-	};
-	instruction_t **instructions = monty_malloc(sizeof(instruction_t *) * 3);
-
-	for (i = 0; opcodes[i] != NULL; i++)
-	{
-		instructions[i] = monty_malloc(sizeof(instruction_t));
-		(instructions[i])->opcode = opcodes[i];
-		(instructions[i])->f = f[i];
-	}
-	instructions[i] = NULL;
-	return (instructions);
-
 }
 
 /**
@@ -73,19 +40,18 @@ instruction_t **build_instructions(void)
  */
 void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number)
 {
+	instruction_t instructions[] = {
+		{"push", &push}, {"pall", &pall}
+	};
 	int i;
-	instruction_t **instructions = NULL;
 
-	/* validation if necessary */
-
-	instructions = build_instructions();
-	for (i = 0; instructions[i] != NULL; i++)
+	for (i = 0; i < OPCODES_N; i++)
 	{
-		if (exact_match(opcode, (instructions[i])->opcode))
+		if (exact_match(opcode, (instructions[i]).opcode))
 		{
 			free(opcode);
-			(instructions[i])->f(stack, line_number);
-			free(instructions[i]);
+			(instructions[i]).f(stack, line_number);
+			break;
 		}
 	}
 }

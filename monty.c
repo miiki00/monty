@@ -23,8 +23,11 @@ int main(int ac, char **av)
 	for (line_number = 1; ; line_number++)
 	{
 		if ((getline(&line, &len, _file)) == -1)
+		{
+			if (line != NULL)
+				free(line);
 			break;
-		printf("line %d: %s", line_number, line);
+		}
 		opcode = handle_line(line);
 		if (opcode == NULL)
 		{
@@ -34,6 +37,7 @@ int main(int ac, char **av)
 		execute_opcode(&stack, opcode, line_number);
 		line = NULL;
 	}
+	free_stack_t(stack);
 	fclose(_file);
 	exit(EXIT_SUCCESS);
 }
@@ -74,44 +78,3 @@ FILE *open_file(char *path, char *flags)
 		exit_error_msg(_MONTY_UNABLE_TO_READ_FILE, path);
 	return (_file);
 }
-
-/**
- * handle_line - extracts the neccessary information from a line of
- * montybyte code.
- * @line: the line to analayz.
- *
- * Return: opcode if the line contains a valid opcode.
- * else if blank line NULL.
- * else prints the right error message and exit.
- */
-char *handle_line(char *line)
-{
-	char *token = NULL, *opcode = NULL, *tmp = NULL;
-	char *delimeters = " \t\n";
-	int ret;
-
-	if (line == NULL)
-		return (NULL);
-
-	token = strtok(line, delimeters);
-	if (token == NULL)
-	{
-		free(line);
-		return (NULL);
-	}
-	ret = check_opcode(token);
-	if (ret == -1)
-		exit_error_msg(101, NULL); /* needs fixing */
-	if (ret == 1)
-	{
-		tmp = strtok(NULL, delimeters);
-		if(tmp != NULL)
-			G_arg = strdup(tmp);
-		else
-			G_arg == NULL;
-	}
-	opcode = strdup(token);
-	free(line);
-	return (opcode);
-}
-

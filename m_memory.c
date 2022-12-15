@@ -20,18 +20,20 @@ void *monty_malloc(unsigned int size)
 }
 
 /**
- * free_instructions - frees memory held by array of instructino_t type.
- * @instructions: the array of the instruction_t types.
+ * free_stack_t - frees a memory that is held by a list type of stack_t.
+ * @head: The head of the list.
  *
- * Return: void.
+ * Return: Void.
  */
-void free_instructions(instruction_t **instructions)
+void free_stack_t(stack_t *head)
 {
-	int i;
+	stack_t *tmp = NULL;
 
-	if (*instructions == NULL)
+	if (head == NULL)
 		return;
-	for (i = 0; instructions[i] != NULL; i++)
-		free(instructions[i]);
-	free(instructions);
+	for ( ; head != NULL; head = tmp)
+	{
+		tmp = head->next;
+		free(head);
+	}
 }

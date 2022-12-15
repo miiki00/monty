@@ -21,12 +21,12 @@ void exit_error_msg(int code, char *add)
 	for (i = 0; codes[i] != 100; i++)
 	{
 		if (code == codes[i])
-			printf("%s", err_msg[i]);
+			fprintf(stderr, "%s", err_msg[i]);
 		if (add != NULL)
-			printf("%s", add);
+			fprintf(stderr, "%s", add);
 		if (code == codes[i])
 			break;
 	}
-	printf("\n");
+	fprintf(stderr, "\n");
 	exit(EXIT_FAILURE);
 }
