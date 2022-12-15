@@ -9,7 +9,7 @@
 
 /* function declarations */
 int exact_match(char *a, char *b);
-char *handle_line(char *line);
+char *handle_line(char *line, unsigned int line_num, stack_t *stack, FILE *f);
 int is_tog(char *str, int tog);
 char *_strdup(char *str);
 

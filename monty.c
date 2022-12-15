@@ -28,7 +28,7 @@ int main(int ac, char **av)
 				free(line);
 			break;
 		}
-		opcode = handle_line(line);
+		opcode = handle_line(line, line_number, stack, _file);
 		if (opcode == NULL)
 		{
 			line = NULL;

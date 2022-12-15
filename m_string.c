@@ -25,12 +25,14 @@ int exact_match(char *a, char *b)
  * handle_line - extracts the neccessary information from a line of
  * montybyte code.
  * @line: the line to analayz.
- *
+ * @line_number: for error message in case of failure.
+ * @stack: for memory managment in case of failuer.
+ * @f: for memory managment in case of failure.
  * Return: opcode if the line contains a valid opcode.
  * else if blank line NULL.
  * else prints the right error message and exit.
  */
-char *handle_line(char *line)
+char *handle_line(char *line, unsigned int line_num, stack_t *stack, FILE *f)
 {
 	char *token = NULL, *opcode = NULL, *tmp = NULL;
 	char *delimeters = " \t\n";
@@ -46,7 +48,13 @@ char *handle_line(char *line)
 	}
 	ret = check_opcode(token);
 	if (ret == -1)
-		exit_error_msg(101, NULL); /* needs fixing */
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_num, token);
+		free(line); /* needs fixing */
+		free_stack_t(stack); /* needs fixing */
+		fclose(f); /* needs fixing */
+		exit(EXIT_FAILURE);
+	}
 	if (ret == 1)
 	{
 		tmp = strtok(NULL, delimeters);
