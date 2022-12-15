@@ -9,17 +9,18 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	int n;
 
-	if (G_arg == NULL || !(is_tog(G_arg, _IS_NUMBER)))
+	if (opcode_info.arg == NULL || !(is_tog(opcode_info.arg, _IS_NUMBER)))
 	{
-		if (G_arg != NULL)
-			free(G_arg);
+		fclose(opcode_info.file);
+		if (opcode_info.arg != NULL)
+			free(opcode_info.arg);
 		if (*stack != NULL)
 			free_stack_t(*stack);
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	n = atoi(G_arg);
-	free(G_arg);
+	n = atoi(opcode_info.arg);
+	free(opcode_info.arg);
 	push_stack_elt(stack, n);
 }
 
