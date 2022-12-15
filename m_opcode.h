@@ -3,7 +3,7 @@
 /* operations code declaration and definations related to monty 0.98 */
 
 /* operations code related macro definations */
-#define OPCODES_N 2 /* number of currently active opcode functions */
+#define OPCODES_N 3 /* number of currently active opcode functions */
 
 /* function declarations */
 void push(stack_t **stack, unsigned int line_number);

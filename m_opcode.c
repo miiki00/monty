@@ -34,4 +34,14 @@ void pall(stack_t **stack, __attribute__((unused)) unsigned int line_number)
 	if (*stack != NULL)
 		print_stack_t(*stack);
 }
-
+/**
+ * pint - print top most element of the stack.
+ * @stack: address of the top pointer of the stack.
+ * @line_number: The number of the line of the opcode.
+ * Returns: nothing
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack != NULL)
+		pint(*stack);
+}

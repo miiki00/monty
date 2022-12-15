@@ -6,5 +6,6 @@
 
 size_t print_stack_t(const stack_t *h);
 stack_t *push_stack_elt(stack_t **head, const int n);
+stack_t pint(stack_t **stack, unsigned int line_number);
 
 #endif

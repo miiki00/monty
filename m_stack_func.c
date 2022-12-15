@@ -41,3 +41,21 @@ stack_t *push_stack_elt(stack_t **head, const int n)
 
 	return (new);
 }
+/**
+ * pint - function that prints the top of the stack
+ * @head: double head pointer to the stack
+ * @counter: line count
+ *
+ * Return: nothing
+ */
+stack_t pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		fclose(opcode_i.file);
+		free(line);
+		exit(EXIT_FAILURE);
+	}
+	printf("%d\n", (*stack)->n);
+}
