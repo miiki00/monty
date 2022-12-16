@@ -109,8 +109,8 @@ You can also use it with out adding it to your path. here is how and also assumi
 | queue   | note: not implemented yet. The stack follows FIFO properties. |
 
 ## Authors
-* [Emebet Worku](emuyoha21@gmail.com) === @emutialx
-* [Mikias Abiy](mikiasabiy16@gmail.com) === @miiki00
+* [Emebet Worku](emuyoha21@gmail.com) : [@emutialx](https://github.com/emutialx/)
+* [Mikias Abiy](mikiasabiy16@gmail.com) : [@miiki00](https://github.com/miiki00/)
 
 
 ### Thankyou for visiting !!!
