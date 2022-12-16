@@ -21,3 +21,18 @@ stack_t *init_stack_elt(int n, stack_t *next, stack_t *prev)
 
 	return (new);
 }
+
+/**
+ * stack_len - measures the length of a stack_t list type.
+ * @h: The head of the list.
+ *
+ * Return: The length of the list.
+ */
+size_t stack_len(const stack_t *h)
+{
+	size_t len;
+
+	for (len = 0; h != NULL; h = h->next)
+		len++;
+	return (len);
+}

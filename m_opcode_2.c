@@ -87,3 +87,19 @@ void op_rotl(stack_t **stack, __attribute__((unused))unsigned int line_number)
 		}
 	}
 }
+
+/**
+ * op_rotr - rotates the stack.
+ * @stack: address of the top pointer of the stack.
+ * @line_number: The line number of the opcode int the file.
+ */
+void op_rotr(stack_t **stack, unsigned int line_number)
+{
+	size_t len, i;
+
+	len = stack_len(*stack);
+	if (*stack != NULL)
+		for (i = 0; i < (len - 1); i++)
+			op_rotl(stack, line_number);
+}
+

@@ -18,7 +18,7 @@ int check_opcode(char *opcode)
 		"pall", "pint", "pop", "swap",
 		"add", "nop", "sub", "div",
 		"mul", "mod", "pchar", "pstr",
-		"rotl", NULL
+		"rotl", "rotr", NULL
 	};
 
 	if (opcode == NULL)
@@ -50,7 +50,7 @@ void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number)
 		{"pop", &op_pop}, {"swap", &op_swap}, {"add", &op_add},
 		{"nop", &op_nop}, {"sub", &op_sub}, {"div", &op_div},
 		{"mul", &op_mul}, {"mod", &op_mod}, {"pchar", &op_pchar},
-		{"pstr", &op_pstr}, {"rotl", &op_rotl}
+		{"pstr", &op_pstr}, {"rotl", &op_rotl}, {"rotr", &op_rotr}
 	};
 	int i;
 
