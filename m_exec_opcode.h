@@ -5,5 +5,7 @@
 /* function declarations */
 int check_opcode(char *opcode);
 void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number);
+char *handle_opcode_line(char *line);
+int is_comment(char *line);
 
 #endif

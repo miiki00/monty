@@ -6,7 +6,7 @@
  * @opcode: the opcode to check.
  *
  * Return: 1 (opcode takes argument), 0 (opcode doesn't take arguments),
- * -1 (opcode doesn't exist).
+ * -1 (opcode doesn't exist), 2 for comment.
  */
 int check_opcode(char *opcode)
 {
@@ -15,11 +15,16 @@ int check_opcode(char *opcode)
 		"push", NULL
 	};
 	char *nonarg_opcodes[] = {
-		"pall", NULL
+		"pall", "pint", "pop", "swap",
+		"add", "nop", "sub", "div",
+		"mul", "mod", "pchar", "pstr",
+		"rotl", NULL
 	};
 
 	if (opcode == NULL)
 		return (0);
+	if (is_comment(opcode))
+		return (2);
 	for (i = 0; arg_opcodes[i] != NULL; i++)
 		if (exact_match(opcode, arg_opcodes[i]))
 			return (1);
@@ -41,7 +46,11 @@ int check_opcode(char *opcode)
 void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number)
 {
 	instruction_t instructions[] = {
-		{"push", &push}, {"pall", &pall}
+		{"push", &op_push}, {"pall", &op_pall}, {"pint", &op_pint},
+		{"pop", &op_pop}, {"swap", &op_swap}, {"add", &op_add},
+		{"nop", &op_nop}, {"sub", &op_sub}, {"div", &op_div},
+		{"mul", &op_mul}, {"mod", &op_mod}, {"pchar", &op_pchar},
+		{"pstr", &op_pstr}, {"rotl", &op_rotl}
 	};
 	int i;
 
@@ -54,4 +63,68 @@ void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number)
 			break;
 		}
 	}
+}
+
+/**
+ * handle_opcode_line - extracts the neccessary information from a line of
+ * montybyte code.
+ * @line: the line to analayz.
+ *
+ * Return: opcode if the line contains a valid opcode.
+ * else if blank line NULL.
+ * else prints the right error message and exit.
+ */
+char *handle_opcode_line(char *line)
+{
+	char *token = NULL, *opcode = NULL, *tmp = NULL;
+	char *delimeters = " \t\n";
+	int ret;
+
+	if (line == NULL)
+		return (NULL);
+	token = strtok(line, delimeters);
+	if (token == NULL)
+	{
+		free(line);
+		return (NULL);
+	}
+	ret = check_opcode(token);
+	if (ret == -1)
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n",
+		opcode_info.line_number, token);
+		free(line); /* needs fixing */
+		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
+	}
+	if (ret == 1)
+	{
+		tmp = strtok(NULL, delimeters);
+		if (tmp != NULL)
+			opcode_info.arg = _strdup(tmp);
+		else
+			opcode_info.arg = NULL;
+	}
+	if (ret == 2)
+	{
+		free(line);
+		return (NULL);
+	}
+	opcode = _strdup(token);
+	free(line);
+	return (opcode);
+}
+
+/**
+ * is_comment - checks if a given line is a comment or not.
+ * @line: The line to check.
+ *
+ * Return: 1 (comment), 0 (not).
+ */
+int is_comment(char *line)
+{
+	if (line == NULL)
+		return (0);
+	if (*line == '#')
+		return (1);
+	return (0);
 }

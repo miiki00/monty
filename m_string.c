@@ -22,52 +22,6 @@ int exact_match(char *a, char *b)
 }
 
 /**
- * handle_line - extracts the neccessary information from a line of
- * montybyte code.
- * @line: the line to analayz.
- *
- * Return: opcode if the line contains a valid opcode.
- * else if blank line NULL.
- * else prints the right error message and exit.
- */
-char *handle_line(char *line)
-{
-	char *token = NULL, *opcode = NULL, *tmp = NULL;
-	char *delimeters = " \t\n";
-	int ret;
-
-	if (line == NULL)
-		return (NULL);
-	token = strtok(line, delimeters);
-	if (token == NULL)
-	{
-		free(line);
-		return (NULL);
-	}
-	ret = check_opcode(token);
-	if (ret == -1)
-	{
-		fprintf(stderr,	"L%d: unknown instruction %s\n",
-			opcode_info.line_number, token);
-		free(line); /* needs fixing */
-		free_stack_t(*(opcode_info.stack)); /* needs fixing */
-		fclose(opcode_info.file); /* needs fixing */
-		exit(EXIT_FAILURE);
-	}
-	if (ret == 1)
-	{
-		tmp = strtok(NULL, delimeters);
-		if (tmp != NULL)
-			opcode_info.arg = _strdup(tmp);
-		else
-			opcode_info.arg = NULL;
-	}
-	opcode = _strdup(token);
-	free(line);
-	return (opcode);
-}
-
-/**
  * is_tog - check if a string contains homogenous content based on
  * a given toggels.
  * @str: the string.
@@ -79,7 +33,7 @@ char *handle_line(char *line)
  */
 int is_tog(char *str, int tog)
 {
-	int low = 64, high = 91, i;
+	int low = 64, high = 91, i, neg;
 
 	if (str == NULL || tog < 1 || tog > 3)
 		return (-1);
@@ -90,11 +44,12 @@ int is_tog(char *str, int tog)
 	}
 	else if (tog == 3)
 	{
+		neg = (*str == '-');
 		low = 47;
 		high = 58;
 	}
 	for (i = 0; str[i] != '\0'; i++)
-		if (!(str[i] > low && str[i] < high))
+		if (!(str[i] > low && str[i] < high) && !(neg && i == 0))
 			return (0);
 	return (1);
 }

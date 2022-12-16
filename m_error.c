@@ -22,11 +22,34 @@ void exit_error_msg(int code, char *add)
 	{
 		if (code == codes[i])
 			fprintf(stderr, "%s", err_msg[i]);
-		if (add != NULL)
+		if (add != NULL && code == codes[i])
 			fprintf(stderr, "%s", add);
 		if (code == codes[i])
 			break;
 	}
 	fprintf(stderr, "\n");
 	exit(EXIT_FAILURE);
+}
+
+/**
+ * free_exit - exits the program after freeing memories retrieved
+ * dynamically.
+ * @file: toggel for closing file descriptor.
+ * @stack: toggel for freeing the memory held by the stack.
+ * @arg: toggel for freeing the memory held by the argument passed
+ * to the opcode.
+ * @_exit: The status you want to exit with.
+ * @opcode: toggel for freeing the memory held by the opcode itself.
+ */
+void free_exit(int file, int stack, int arg, int opcode, int _exit)
+{
+	if (file)
+		fclose(opcode_info.file);
+	if (stack)
+		free_stack_t(*(opcode_info.stack));
+	if (arg)
+		free(opcode_info.arg);
+	if (opcode)
+		free(opcode_info.opcode);
+	exit(_exit);
 }

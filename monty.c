@@ -19,7 +19,7 @@ int main(int ac, char **av)
 	stack_t *stack = NULL;
 
 	check_main_args(ac, av);
-	opcode_info.file = _file = open_file(av[1], "r");
+	opcode_info.file = _file = open_file(av[1], "rb");
 	opcode_info.stack = &stack;
 	for (line_number = 1; ; line_number++)
 	{
@@ -30,7 +30,7 @@ int main(int ac, char **av)
 				free(line);
 			break;
 		}
-		opcode_info.opcode = opcode = handle_line(line);
+		opcode_info.opcode = opcode = handle_opcode_line(line);
 		if (opcode == NULL)
 		{
 			line = NULL;
@@ -39,8 +39,7 @@ int main(int ac, char **av)
 		execute_opcode(&stack, opcode, line_number);
 		line = NULL;
 	}
-	free_stack_t(stack);
-	fclose(_file);
+	free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_SUCCESS);
 	exit(EXIT_SUCCESS);
 }
 
@@ -57,7 +56,7 @@ void check_main_args(int ac, char **av)
 	FILE *_file;
 
 	if (ac == 2)
-		_file = open_file(av[1], "r");
+		_file = open_file(av[1], "rb");
 	else
 		exit_error_msg(_MONTY_USAGE_ERR, NULL);
 	fclose(_file);
