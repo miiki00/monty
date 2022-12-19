@@ -86,7 +86,47 @@ You can also use it with out adding it to your path. here is how and also assumi
 ```
 ./monty file
 ```
-## Monty's operators/commands.
+## Monty's operators/commands and Usage.
+
+> NOTE: monty can only interpret one command perline any thing you put after a valid command will not be taken to account
+
+### Manipulating the stack.
+
+When monty startes interpreting a source file it startes with an empty stack so you have only two option to what you first line of your source file can be
+the first pushing and element to the stack or changing the mode in which the stack operates on.<br>
+The stack operated in to modes stack and queue. Stack(LIFO) mode is where both addition and deletion that happen on the stack takes place from one end (ie TOP, BOTTOM).<br>
+The default is stack. Queue(FIFO) mode is where deletion happens at one end and addition happens from the other. you can go back and forth it's no problem for monty. In the case of monty when it's operating in Stack mode both addition and delition happen at the top of the stack. and in the case of Queue mod deletion takes place at the top of the stack and addition happens at the end of the stack.<br>
+
+Here is some example input output of monty while operating in stack mode and queue mode.
+```
+$ cat file.m
+stack # getting it to operate in stack mode (but it's not necessary in the case of stack as it's the default).
+push 3 # you will see that thing will appear in revers order pushing while you are in stack mode.
+push 2
+push 1
+pall # prints all the elements
+pop # deleting elements.
+pop
+pop
+pstr # printing new lines 
+pstr
+queue # getting it to operate in queue mode.
+push 1 # in the case of queue things will appear in the same order they were pushed.
+push 2
+push 3
+pall
+
+$ monty file.m
+1
+2
+3
+
+
+1
+2
+3
+```
+Here is a complete list of monty commands/operators.
 
 | Command | Description |
 |:---	  |:---			|
