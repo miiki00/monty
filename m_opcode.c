@@ -18,7 +18,10 @@ void op_push(stack_t **stack, unsigned int line_number)
 	}
 	n = atoi(opcode_info.arg);
 	free(opcode_info.arg);
-	push_stack_elt(stack, n);
+	if (opcode_info.mode == 'S')
+		push_stack_elt(stack, n);
+	if (opcode_info.mode == 'Q')
+		add_elt_end(stack, n);
 }
 
 /**

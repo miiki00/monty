@@ -18,6 +18,7 @@ int main(int ac, char **av)
 	FILE *_file = NULL;
 	stack_t *stack = NULL;
 
+	op_stack(NULL, 0); /* setting default mode to stack */
 	check_main_args(ac, av);
 	opcode_info.file = _file = open_file(av[1], "rb");
 	opcode_info.stack = &stack;
