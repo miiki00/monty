@@ -90,7 +90,7 @@ You can also use it with out adding it to your path. here is how and also assumi
 
 | Command | Description |
 |:---	  |:---			|
-| push	  | Adds an integer into the stacks top/bottom base on the mode you are in. syntax: `push <integer>`. |
+| push	  | Adds an integer into the stacks top/bottom base on the mode you are in.<br>syntax: `push <integer>`. |
 | pall    | Prints all the integers in the stack. |
 | pop     | Delets the top element of the stack. |
 | pint	  | Prints the top element of the stack. |
