@@ -105,8 +105,8 @@ You can also use it with out adding it to your path. here is how and also assumi
 | pstr	  | Prints the stack element's correspoonding assci value and it won't stop until NUll terminator is found, stack ends or value is out of range |
 | rotl    | Takes the top element of the stack an puts it at the end. |
 | rotr    | Takes the last element and puts it at the top. |
-| stack   | note: not implemented yet. The stack follow LIFO properties. |
-| queue   | note: not implemented yet. The stack follows FIFO properties. |
+| stack   | The stack follow LIFO properties. (both addition and deletion takes place on one end) |
+| queue   | The stack follows FIFO properties. (addition takes place at the rear of the stack and deletion takes place at the front of the stack.) |
 
 ## Authors
 * [Emebet Worku](mailto:emuyoha21@gmail.com) : [@emutialx](https://github.com/emutialx/)
