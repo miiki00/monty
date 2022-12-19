@@ -61,6 +61,7 @@ void execute_opcode(stack_t **stack, char *opcode, unsigned int line_number)
 		if (exact_match(opcode, (instructions[i]).opcode))
 		{
 			free(opcode);
+			opcode_info.opcode = NULL;
 			(instructions[i]).f(stack, line_number);
 			break;
 		}
@@ -93,10 +94,9 @@ char *handle_opcode_line(char *line)
 	ret = check_opcode(token);
 	if (ret == -1)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n",
-		opcode_info.line_number, token);
+		opcode_info.opcode = _strdup(token);
 		free(line); /* needs fixing */
-		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
+		exit_error_msg(_MONTY_UNKNOWN_INSTRUCTION, opcode_info.opcode);
 	}
 	if (ret == 1)
 	{

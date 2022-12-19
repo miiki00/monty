@@ -6,7 +6,7 @@
  * @stack: address of the top pointer of the stack.
  * @line_number: The line number of the opcode int the file.
  */
-void op_mod(stack_t **stack, unsigned int line_number)
+void op_mod(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	stack_t *first = NULL, *second = NULL;
 	int mod_n;
@@ -14,15 +14,9 @@ void op_mod(stack_t **stack, unsigned int line_number)
 	first = get_elt_at_index(*stack, 0);
 	second = get_elt_at_index(*stack, 1);
 	if (!(first) || !(second))
-	{
-		fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
-		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
-	}
+		exit_error_msg(_MONTY_MOD_STACK_TOO_SHORT, NULL);
 	if (!(first->n))
-	{
-		fprintf(stderr, "L%u: division by zero\n", line_number);
-		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
-	}
+		exit_error_msg(_MONTY_DIVISION_BY_ZERO, NULL);
 	mod_n = second->n % first->n;
 	second->n = mod_n;
 	delete_elt_at_index(stack, 0);
@@ -34,21 +28,15 @@ void op_mod(stack_t **stack, unsigned int line_number)
  * @stack: address of the top pointer of the stack.
  * @line_number: The line number of the opcode int the file.
  */
-void op_pchar(stack_t **stack, unsigned int line_number)
+void op_pchar(stack_t **stack, __attribute__((unused))unsigned int line_number)
 {
 	int ch;
 
 	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%u: can't pchar, stack empty\n", line_number);
-		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
-	}
+		exit_error_msg(_MONTY_PCHAR_STACK_EMPTY, NULL);
 	ch = (*stack)->n;
 	if (ch > 127 ||  ch < 0)
-	{
-		fprintf(stderr, "L%u: can't pchar, value out of range\n", line_number);
-		free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_FAILURE);
-	}
+		exit_error_msg(_MONTY_PCHAR_VALUE_OUT_OF_RANGE, NULL);
 	printf("%c\n", ch);
 }
 

@@ -40,7 +40,7 @@ int main(int ac, char **av)
 		execute_opcode(&stack, opcode, line_number);
 		line = NULL;
 	}
-	free_exit(_M_TRU, _M_TRU, _M_FLS, _M_FLS, EXIT_SUCCESS);
+	free_exit(EXIT_SUCCESS);
 	exit(EXIT_SUCCESS);
 }
 
